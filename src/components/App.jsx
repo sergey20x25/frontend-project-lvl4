@@ -1,17 +1,20 @@
 import React from 'react';
+import ChannelInfo from './ChannelInfo';
 import ChannelList from './ChannelList';
+import Dialog from './Dialog';
 import TopNav from './TopNav';
 
 const App = ({ channels }) => (
   <>
-    <div className="d-flex flex-column vh-100">
-      <TopNav />
-      <div className="row w-100 flex-grow-1">
-        <div className="col-3 bg-info">
+    <div className="container-fluid p-0">
+      <div className="row min-vh-100">
+        <div className="col-2 bg-light">
+          <TopNav />
           <ChannelList channels={channels} />
         </div>
-        <div className="col-9 p-3">
-          dialog
+        <div className="col">
+          <ChannelInfo />
+          <Dialog />
         </div>
       </div>
     </div>
