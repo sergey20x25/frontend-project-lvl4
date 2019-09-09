@@ -12,9 +12,11 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const { channels } = gon;
+const props = {
+  channels: gon.channels,
+};
 
 render(
-  App(channels),
+  App(props),
   document.getElementById('chat'),
 );

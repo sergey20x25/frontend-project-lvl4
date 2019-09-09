@@ -1,9 +1,14 @@
 import React from 'react';
 
 const ChannelList = ({ channels }) => (
-  <ul>
-    {channels.map(({ id, name }) => <li key={id}>{name}</li>)}
-  </ul>
+  <div className="p-3">
+    <h6>Channels</h6>
+    {channels.map(({ id, name }) => (
+      <div key={id}>
+        {`#${name}`}
+      </div>
+    ))}
+  </div>
 );
 
 export default ChannelList;
