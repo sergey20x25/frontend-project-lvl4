@@ -6,7 +6,7 @@ import TopNav from './TopNav';
 
 const App = ({ channels }) => (
   <>
-    <div className="container-fluid p-0">
+    <div className="container-fluid">
       <div className="row min-vh-100">
         <div className="col-2 bg-light">
           <TopNav />
