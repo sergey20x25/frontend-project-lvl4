@@ -1,9 +1,17 @@
 import React from 'react';
+import UserContext from '../user-context';
 
-const TopNav = () => (
-  <div className="navbar navbar-expand-lg navbar-light px-0">
-    <a className="navbar-brand" href="/">Chat</a>
-  </div>
-);
+class TopNav extends React.Component {
+  static contextType = UserContext;
+
+  render() {
+    return (
+      <div className="navbar navbar-expand-lg navbar-light px-0">
+        <a className="navbar-brand" href="/">Chat</a>
+        {`@${this.context}`}
+      </div>
+    );
+  }
+}
 
 export default TopNav;

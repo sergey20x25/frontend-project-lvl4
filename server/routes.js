@@ -88,6 +88,7 @@ export default (router, io) => {
         channelId: Number(ctx.params.channelId),
         id: getNextId(),
       };
+      console.log(message);
       state.messages.push(message);
       ctx.status = 201;
       const data = {
