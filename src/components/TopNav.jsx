@@ -7,7 +7,7 @@ class TopNav extends React.Component {
   render() {
     return (
       <div className="navbar navbar-expand-lg navbar-light px-0">
-        <a className="navbar-brand" href="/">Chat</a>
+        <a className="navbar-brand" href="/">CHAT</a>
         {`@${this.context}`}
       </div>
     );

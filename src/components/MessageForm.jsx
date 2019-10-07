@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 };
 
 const actionCreators = {
-  addMessage: actions.addMessage,
+  sendMessage: actions.sendMessage,
 };
 
 @reduxForm({ form: 'newMessage' })
@@ -19,14 +19,14 @@ class MessageForm extends React.Component {
   static contextType = UserContext;
 
   handleSubmit = userName => async ({ text }) => {
-    const { addMessage, reset, currentChannelId } = this.props;
+    const { sendMessage, reset, currentChannelId } = this.props;
     const message = {
       text,
       from: userName,
       time: Date.now(),
     };
     try {
-      await addMessage(message, currentChannelId);
+      await sendMessage(message, currentChannelId);
     } catch (e) {
       throw new SubmissionError({ _error: e.message });
     }
@@ -38,9 +38,11 @@ class MessageForm extends React.Component {
     const { handleSubmit, submitting } = this.props;
     const userName = this.context;
     return (
-      <form className="form-inline" onSubmit={handleSubmit(this.handleSubmit(userName))}>
-        <div className="form-group mx-3">
+      <form className="form-inline pl-2 mt-auto d-flex" onSubmit={handleSubmit(this.handleSubmit(userName))}>
+        <div className="input-group flex-fill py-3">
           <Field
+            className="form-control"
+            placeholder="Message"
             autoFocus
             name="text"
             required
@@ -50,13 +52,17 @@ class MessageForm extends React.Component {
             ref={(ref) => { this.textInput = ref; }}
             forwardRef
           />
+          <div className="input-group-append">
+            <button
+              type="submit"
+              className="btn btn-outline-secondary"
+              value="Add"
+              disabled={submitting}
+            >
+              send
+            </button>
+          </div>
         </div>
-        <input
-          type="submit"
-          className="btn btn-primary btn-sm"
-          value="Add"
-          disabled={submitting}
-        />
       </form>
     );
   }

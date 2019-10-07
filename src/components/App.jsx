@@ -12,7 +12,7 @@ const App = () => (
         <TopNav />
         <ChannelList />
       </div>
-      <div className="col">
+      <div className="col d-flex flex-column">
         <ChannelInfo />
         <Dialog />
         <MessageForm />

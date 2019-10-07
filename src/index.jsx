@@ -11,42 +11,22 @@ import gon from 'gon';
 import reducers from './reducers';
 import App from './components/App';
 import UserContext from './user-context';
-
-// import io from 'socket.io-client';
+import createInitialState from './createInitialState';
+import socketListener from './socketListener';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const createInitialState = ({ channels: gonChannels }) => {
-  const channelsById = gonChannels.reduce((acc, channel) => {
-    const { id } = channel;
-    acc[id] = channel;
-    return acc;
-  }, {});
-  const channelsAllIds = gonChannels.map(({ id }) => id);
-  return {
-    channels: {
-      byId: channelsById,
-      allIds: channelsAllIds,
-      currentChannelId: 1,
-    },
-  };
-};
-
 const initialState = createInitialState(gon);
 
-/* eslint-disable no-underscore-dangle */
-const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
-const devtoolMiddleware = ext && ext();
-/* eslint-enable */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   reducers,
   initialState,
-  compose(
+  composeEnhancers(
     applyMiddleware(thunk),
-    devtoolMiddleware,
   ),
 );
 
@@ -54,6 +34,8 @@ if (!cookies.get('userName')) {
   cookies.set('userName', faker.name.firstName());
 }
 const userName = cookies.get('userName');
+
+socketListener(store);
 
 render(
   <Provider store={store}>

@@ -4,20 +4,21 @@ import { createAction } from 'redux-actions';
 import routes from '../routes';
 
 export const selectChannel = createAction('CHANNEL_SELECT');
+export const addMessage = createAction('MESSAGE_ADD');
 
-export const addMessageRequest = createAction('MESSAGE_ADD_REQUEST');
-export const addMessageSuccess = createAction('MESSAGE_ADD_SUCCESS');
-export const addMessageFailure = createAction('MESSAGE_ADD_FAILURE');
+export const sendMessageRequest = createAction('MESSAGE_SEND_REQUEST');
+export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
+export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
 
-export const addMessage = (message, channelId) => async (dispatch) => {
-  dispatch(addMessageRequest());
+export const sendMessage = (message, channelId) => async (dispatch) => {
+  dispatch(sendMessageRequest());
   const url = routes.channelMessagesPath(channelId);
   const data = { data: { attributes: message } };
   try {
     await axios.post(url, data);
-    dispatch(addMessageSuccess());
+    dispatch(sendMessageSuccess());
   } catch (e) {
-    dispatch(addMessageFailure());
+    dispatch(sendMessageFailure());
     throw e;
   }
 };

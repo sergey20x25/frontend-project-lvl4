@@ -2,11 +2,20 @@ import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { channelsSelector, getCurrentChannelId } from '../selectors';
+
+// const mapStateToProps = (state) => {
+//   const { channels: { byId, allIds, currentChannelId } } = state;
+//   const channels = allIds.map(id => byId[id]);
+//   return { channels, currentChannelId };
+// };
 
 const mapStateToProps = (state) => {
-  const { channels: { byId, allIds, currentChannelId } } = state;
-  const channels = allIds.map(id => byId[id]);
-  return { channels, currentChannelId };
+  const props = {
+    channels: channelsSelector(state),
+    currentChannelId: getCurrentChannelId(state),
+  };
+  return props;
 };
 
 const actionCreators = {
