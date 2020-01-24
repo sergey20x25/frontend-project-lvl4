@@ -8,6 +8,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import faker from 'faker';
 import cookies from 'js-cookie';
 import gon from 'gon';
+import alertReducer from './slices/alertSlice';
 import channelsReducer from './slices/channelsSlice';
 import messagesReducer from './slices/messagesSlice';
 import sendMessageStateReducer from './slices/sendMessageStateSlice';
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const reducer = {
+  alert: alertReducer,
   channels: channelsReducer,
   messages: messagesReducer,
   sendMessageState: sendMessageStateReducer,

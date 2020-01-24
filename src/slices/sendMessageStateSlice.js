@@ -4,14 +4,14 @@ const sendMessageState = createSlice({
   name: 'sendMessageState',
   initialState: 'none',
   reducers: {
-    sendMessageRequest(state) {
-      state = 'requested';
+    sendMessageRequest() {
+      return 'requested';
     },
-    sendMessageSuccess(state) {
-      state = 'finished';
+    sendMessageSuccess() {
+      return 'finished';
     },
-    sendMessageFailure(state) {
-      state = 'failed';
+    sendMessageFailure() {
+      return 'failed';
     },
   },
 });

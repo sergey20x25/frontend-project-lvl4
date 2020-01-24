@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
+import { showAlert } from '../slices/alertSlice';
 import { sendMessage } from '../thunkActions';
 import UserContext from '../user-context';
 
@@ -11,10 +12,11 @@ const mapStateToProps = (state) => {
 
 const actionCreators = {
   sendMessage,
+  showAlert,
 };
 
 const MessageForm = (props) => {
-  const { sendMessage, currentChannelId } = props;
+  const { sendMessage, showAlert, currentChannelId } = props;
   const textInput = React.createRef();
   const userName = useContext(UserContext);
   return (
@@ -30,6 +32,8 @@ const MessageForm = (props) => {
           await sendMessage(message, currentChannelId);
         } catch (e) {
           console.log(e.message);
+          showAlert({ text: e.message });
+          throw e;
         }
         setSubmitting(false);
         resetForm();
@@ -47,6 +51,7 @@ const MessageForm = (props) => {
               placeholder="Message"
               autoFocus
               name="text"
+              id="text"
               required
               component="input"
               type="text"
