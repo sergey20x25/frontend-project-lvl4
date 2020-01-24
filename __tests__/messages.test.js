@@ -3,6 +3,8 @@
 import path from 'path';
 import buildApp from '../server';
 
+require('regenerator-runtime/runtime');
+
 const buildUrl = (url) => path.join('/api/v1/', url);
 
 test('get /channels/:id/messages', async () => {
@@ -73,4 +75,3 @@ test('post /channels/:id/messages', async () => {
 
   expect(JSON.parse(response.payload)).toMatchObject(expected);
 });
-

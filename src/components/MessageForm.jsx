@@ -31,7 +31,6 @@ const MessageForm = (props) => {
         try {
           await sendMessage(message, currentChannelId);
         } catch (e) {
-          console.log(e.message);
           showAlert({ text: e.message });
           throw e;
         }

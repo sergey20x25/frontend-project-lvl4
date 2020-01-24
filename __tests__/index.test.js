@@ -1,7 +1,9 @@
-import path from 'path';
+// import path from 'path';
 import buildApp from '../server';
 
-const buildUrl = (url) => path.join('/api/v1/', url);
+require('regenerator-runtime/runtime');
+
+// const buildUrl = (url) => path.join('/api/v1/', url);
 
 test('get /', async () => {
   const app = buildApp();
