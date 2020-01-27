@@ -2,8 +2,7 @@
 
 import path from 'path';
 import buildApp from '../server';
-
-require('regenerator-runtime/runtime');
+import 'regenerator-runtime/runtime';
 
 const buildUrl = (url) => path.join('/api/v1/', url);
 
