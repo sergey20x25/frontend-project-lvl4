@@ -9,29 +9,26 @@ const mapStateToProps = (state) => {
   return props;
 };
 
-@connect(mapStateToProps)
-class Dialog extends React.Component {
-  render() {
-    const { messages } = this.props;
-    return (
-      <div className="flex-fill d-flex flex-column position-relative">
-        <ul className="list-group w-100 h-100 d-flex flex-column pl-2 overflow-auto position-absolute">
-          {messages.map(({
-            text, from, time, id,
-          }) => {
-            const createdAt = new Date(time);
-            return (
-              <li key={id} className="list-group-item border-0">
-                {`@${from} - ${createdAt.toLocaleString('en-GB')}`}
-                <br />
-                {text}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+const Dialog = (props) => {
+  const { messages } = props;
+  return (
+    <div className="flex-fill d-flex flex-column position-relative">
+      <ul className="list-group w-100 h-100 d-flex flex-column pl-2 overflow-auto position-absolute">
+        {messages.map(({
+          text, from, time, id,
+        }) => {
+          const createdAt = new Date(time);
+          return (
+            <li key={id} className="list-group-item border-0">
+              {`@${from} - ${createdAt.toLocaleString('en-GB')}`}
+              <br />
+              {text}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
-export default Dialog;
+export default connect(mapStateToProps)(Dialog);
