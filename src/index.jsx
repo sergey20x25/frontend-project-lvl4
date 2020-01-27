@@ -39,7 +39,8 @@ const preloadedState = createInitialState(gon);
 const store = configureStore({
   reducer,
   middleware,
-  devTools: process.env.NODE_ENV !== 'production',
+  // devTools: process.env.NODE_ENV !== 'production',
+  devTools: true,
   preloadedState,
 });
 
