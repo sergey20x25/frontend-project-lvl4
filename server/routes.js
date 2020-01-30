@@ -46,7 +46,7 @@ export default (app, io, defaultState = {}) => {
       reply.send(response);
     })
     .post('/api/v1/channels', (req, reply) => {
-      const { data: { attributes: { name } } } = req.body;
+      const { data: { attributes: name } } = req.body;
       const channel = {
         name,
         removable: true,

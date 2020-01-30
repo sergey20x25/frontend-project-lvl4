@@ -5,6 +5,7 @@ import ChannelList from './ChannelList';
 import Dialog from './Dialog';
 import MessageForm from './MessageForm';
 import TopNav from './TopNav';
+import ModalRoot from './ModalRoot';
 
 const App = () => (
   <div className="container-fluid">
@@ -20,6 +21,7 @@ const App = () => (
         <MessageForm />
       </div>
     </div>
+    <ModalRoot />
   </div>
 );
 

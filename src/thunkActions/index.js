@@ -4,9 +4,13 @@ import {
   sendMessageSuccess,
   sendMessageFailure,
 } from '../slices/sendMessageStateSlice';
+import {
+  createChannelRequest,
+  createChannelSuccess,
+  createChannelFailure,
+} from '../slices/channelsSlice';
 import routes from '../routes';
 
-// eslint-disable-next-line import/prefer-default-export
 export const sendMessage = (message, channelId) => async (dispatch) => {
   dispatch(sendMessageRequest());
   const url = routes.channelMessagesPath(channelId);
@@ -16,6 +20,20 @@ export const sendMessage = (message, channelId) => async (dispatch) => {
     dispatch(sendMessageSuccess());
   } catch (e) {
     dispatch(sendMessageFailure());
+    throw e;
+  }
+};
+
+export const createChannel = (name) => async (dispatch) => {
+  dispatch(createChannelRequest());
+  const url = routes.channelsPath();
+  const data = { data: { attributes: name } };
+  try {
+    const response = await axios.post(url, data);
+    const { data: { data: { attributes: channel } } } = response;
+    dispatch(createChannelSuccess({ channel }));
+  } catch (e) {
+    dispatch(createChannelFailure());
     throw e;
   }
 };

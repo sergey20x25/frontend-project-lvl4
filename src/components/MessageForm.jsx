@@ -52,7 +52,6 @@ const MessageForm = (props) => {
               name="text"
               id="text"
               required
-              component="input"
               type="text"
               disabled={formik.isSubmitting}
               ref={textInput}

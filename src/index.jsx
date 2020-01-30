@@ -11,6 +11,7 @@ import gon from 'gon';
 import alertReducer from './slices/alertSlice';
 import channelsReducer from './slices/channelsSlice';
 import messagesReducer from './slices/messagesSlice';
+import modalReducer from './slices/modalSlice';
 import sendMessageStateReducer from './slices/sendMessageStateSlice';
 import App from './components/App';
 import UserContext from './user-context';
@@ -25,6 +26,7 @@ const reducer = {
   alert: alertReducer,
   channels: channelsReducer,
   messages: messagesReducer,
+  modal: modalReducer,
   sendMessageState: sendMessageStateReducer,
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
 import { selectChannel } from '../slices/channelsSlice';
+import { showModal } from '../slices/modalSlice';
 import { channelsSelector, getCurrentChannelId } from '../selectors';
 
 const mapStateToProps = (state) => {
@@ -14,23 +15,36 @@ const mapStateToProps = (state) => {
 
 const actionCreators = {
   selectChannel,
+  showModal,
 };
 
 const ChannelList = (props) => {
-  const { channels, currentChannelId, selectChannel } = props;
+  const {
+    channels,
+    currentChannelId,
+    selectChannel,
+    showModal,
+  } = props;
 
   const handleSelectChannel = (id) => () => {
     selectChannel({ id });
   };
 
-  if (channels.length === 0) {
-    return null;
-  }
+  const handleAddChannel = () => {
+    showModal({ modalType: 'ADD_CHANNEL' });
+  };
 
   return (
     <div>
       <h6>Channels</h6>
       <ul className="list-group">
+        <button
+          type="button"
+          className="bg-light list-group-item list-group-item-action"
+          onClick={handleAddChannel}
+        >
+          Add channel...
+        </button>
         {channels.map(({ id, name }) => {
           const classes = cn({
             'bg-light': true,
