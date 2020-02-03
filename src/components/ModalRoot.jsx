@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import DeleteChannelModal from './DeleteChannelModal';
 import AddChannelModal from './AddChannelModal';
+import RenameChannelModal from './RenameChannelModal';
 
 const MODAL_COMPONENTS = {
   DELETE_CHANNEL: DeleteChannelModal,
   ADD_CHANNEL: AddChannelModal,
+  RENAME_CHANNEL: RenameChannelModal,
 };
 
 const mapStateToProps = ({ modal }) => (modal);
