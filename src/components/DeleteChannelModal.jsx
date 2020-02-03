@@ -30,7 +30,7 @@ const DeleteChannelModal = ({
         await deleteChannel(id);
         hideModal();
       } catch (e) {
-        showAlert({ text: e.message });
+        showAlert({ text: 'Some error' });
         hideModal();
         throw e;
       }
@@ -45,7 +45,9 @@ const DeleteChannelModal = ({
   return (
     <Modal show onHide={hideModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete channel?</Modal.Title>
+        <Modal.Title>
+          {`Delete channel #${currentChannel.name}?`}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
         <Button variant="secondary" onClick={hideModal}>

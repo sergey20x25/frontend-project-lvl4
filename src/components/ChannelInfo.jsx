@@ -25,7 +25,7 @@ const ChannelInfo = ({ byId, currentChannelId, showModal }) => {
   const currentChannel = byId[currentChannelId];
 
   return (
-    <div className="navbar navbar-expand-lg px-0 py-3">
+    <div className="navbar navbar-expand-lg px-0 py-3 justify-content-between">
       <h6>{`#${byId[currentChannelId].name}`}</h6>
       <ButtonGroup aria-label="Channel buttons">
         <Button

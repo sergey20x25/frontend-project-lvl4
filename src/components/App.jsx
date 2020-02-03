@@ -10,7 +10,7 @@ import ModalRoot from './ModalRoot';
 const App = () => (
   <div className="container-fluid">
     <div className="row min-vh-100">
-      <div className="col-2 bg-light">
+      <div className="px-3 bg-light w-30">
         <TopNav />
         <ChannelList />
       </div>

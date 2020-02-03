@@ -29,7 +29,7 @@ const RenameChannelModal = ({
 }) => (
   <Modal show onHide={hideModal}>
     <Modal.Header closeButton>
-      <Modal.Title>Rename channel</Modal.Title>
+      <Modal.Title>{`Rename channel #${currentChannel.name}`}</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <Formik
@@ -38,8 +38,8 @@ const RenameChannelModal = ({
             await renameChannel(currentChannel.id, newChannelName);
             hideModal();
           } catch (e) {
-            // showAlert({ text: e.message });
-            // hideModal();
+            showAlert({ text: 'Some error' });
+            hideModal();
             throw e;
           }
         }}
