@@ -39,9 +39,7 @@ test('get /channels', async () => {
 test('post /channels', async () => {
   const payload = {
     data: {
-      attributes: {
-        name: 'custom',
-      },
+      attributes: 'custom',
     },
   };
   const app = buildApp();
