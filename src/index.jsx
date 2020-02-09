@@ -4,45 +4,24 @@ import '../assets/application.scss';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import faker from 'faker';
 import cookies from 'js-cookie';
 import gon from 'gon';
-import alertReducer from './slices/alertSlice';
-import channelsReducer from './slices/channelsSlice';
-import messagesReducer from './slices/messagesSlice';
-import modalReducer from './slices/modalSlice';
-import sendMessageStateReducer from './slices/sendMessageStateSlice';
+import io from 'socket.io-client';
+import reducer, { actions } from './slices';
 import App from './components/App';
 import UserContext from './user-context';
 import createInitialState from './createInitialState';
-import socketListener from './socketListener';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const reducer = {
-  alert: alertReducer,
-  channels: channelsReducer,
-  messages: messagesReducer,
-  modal: modalReducer,
-  sendMessageState: sendMessageStateReducer,
-};
-
-const middleware = getDefaultMiddleware({
-  immutableCheck: false,
-  serializableCheck: false,
-  thunk: true,
-});
-
 const preloadedState = createInitialState(gon);
 
 const store = configureStore({
   reducer,
-  middleware,
-  // devTools: process.env.NODE_ENV !== 'production',
-  devTools: true,
   preloadedState,
 });
 
@@ -51,7 +30,11 @@ if (!cookies.get('userName')) {
 }
 const userName = cookies.get('userName');
 
-socketListener(store);
+const socket = io();
+
+socket.on('newMessage', ({ data: { attributes: message } }) => {
+  store.dispatch(actions.addMessage({ message }));
+});
 
 render(
   <Provider store={store}>

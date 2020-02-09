@@ -1,8 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
-import { selectChannel } from '../slices/channelsSlice';
-import { showModal } from '../slices/modalSlice';
+import { actions } from '../slices';
 import { channelsSelector, getCurrentChannelId } from '../selectors';
 
 const mapStateToProps = (state) => {
@@ -11,11 +10,6 @@ const mapStateToProps = (state) => {
     currentChannelId: getCurrentChannelId(state),
   };
   return props;
-};
-
-const actionCreators = {
-  selectChannel,
-  showModal,
 };
 
 const ChannelList = (props) => {
@@ -63,4 +57,4 @@ const ChannelList = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(ChannelList);
+export default connect(mapStateToProps, actions)(ChannelList);

@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideAlert } from '../slices/alertSlice';
+import { actions } from '../slices';
 
 const mapStateToProps = ({ alert }) => (
   { alert }
 );
-
-const actionCreators = {
-  hideAlert,
-};
 
 const Alert = (props) => {
   const { alert, hideAlert } = props;
@@ -26,4 +22,4 @@ const Alert = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(Alert);
+export default connect(mapStateToProps, actions)(Alert);

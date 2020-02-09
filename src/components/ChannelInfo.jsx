@@ -2,15 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { showModal } from '../slices/modalSlice';
+import { actions } from '../slices';
+
 
 const mapStateToProps = (state) => {
   const { channels: { byId, currentChannelId } } = state;
   return { byId, currentChannelId };
-};
-
-const actionCreators = {
-  showModal,
 };
 
 const ChannelInfo = ({ byId, currentChannelId, showModal }) => {
@@ -48,4 +45,4 @@ const ChannelInfo = ({ byId, currentChannelId, showModal }) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(ChannelInfo);
+export default connect(mapStateToProps, actions)(ChannelInfo);

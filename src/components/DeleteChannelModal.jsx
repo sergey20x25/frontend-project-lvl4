@@ -2,28 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { hideModal } from '../slices/modalSlice';
-import { showAlert } from '../slices/alertSlice';
-import { deleteChannel } from '../thunkActions';
+import { actions, asyncActions } from '../slices';
 
 const mapStateToProps = ({ channels }) => {
   const { byId, currentChannelId } = channels;
   return { byId, currentChannelId };
 };
 
-const actionCreators = {
-  deleteChannel,
-  hideModal,
-  showAlert,
-};
-
 const DeleteChannelModal = ({
   byId,
   currentChannelId,
-  deleteChannel,
   hideModal,
   showAlert,
 }) => {
+  const { useChannelsActions } = asyncActions;
+  const { deleteChannel } = useChannelsActions();
+
+  const handleClose = () => {
+    hideModal();
+  };
+
   const handleDeleteChannel = ({ id, removable }) => async () => {
     if (removable) {
       try {
@@ -50,7 +48,7 @@ const DeleteChannelModal = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Footer>
-        <Button variant="secondary" onClick={hideModal}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
         <Button variant="primary" onClick={handleDeleteChannel(currentChannel)}>
@@ -61,4 +59,4 @@ const DeleteChannelModal = ({
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(DeleteChannelModal);
+export default connect(mapStateToProps, actions)(DeleteChannelModal);

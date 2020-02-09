@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 import _ from 'lodash';
+import axios from 'axios';
+import routes from '../routes';
 
 const initialState = {
   byId: {},
@@ -8,7 +11,7 @@ const initialState = {
   deleteChannelFailure: 'none',
 };
 
-const channels = createSlice({
+const slice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
@@ -61,10 +64,7 @@ const channels = createSlice({
   },
 });
 
-const { actions, reducer } = channels;
-
-export const {
-  selectChannel,
+const {
   createChannelRequest,
   createChannelSuccess,
   createChannelFailure,
@@ -74,6 +74,60 @@ export const {
   renameChannelRequest,
   renameChannelSuccess,
   renameChannelFailure,
-} = actions;
+} = slice.actions;
 
-export default reducer;
+const useChannelsActions = () => {
+  const dispatch = useDispatch();
+
+  const createChannel = async (name) => {
+    dispatch(createChannelRequest());
+    const url = routes.channelsPath();
+    const data = { data: { attributes: name } };
+    try {
+      const response = await axios.post(url, data);
+      const { data: { data: { attributes: channel } } } = response;
+      dispatch(createChannelSuccess({ channel }));
+    } catch (e) {
+      dispatch(createChannelFailure());
+      throw e;
+    }
+  };
+
+  const deleteChannel = async (channelId) => {
+    dispatch(deleteChannelRequest());
+    const url = routes.channelPath(channelId);
+    try {
+      await axios.delete(url);
+      dispatch(deleteChannelSuccess(channelId));
+    } catch (e) {
+      dispatch(deleteChannelFailure());
+      throw e;
+    }
+  };
+
+  const renameChannel = async (channelId, newChannelName) => {
+    dispatch(renameChannelRequest());
+    const url = routes.channelPath(channelId);
+    const data = { data: { attributes: { name: newChannelName } } };
+    try {
+      const response = await axios.patch(url, data);
+      const { data: { data: { attributes: channel } } } = response;
+      dispatch(renameChannelSuccess({ channel }));
+    } catch (e) {
+      dispatch(renameChannelFailure());
+      throw e;
+    }
+  };
+  return {
+    createChannel,
+    deleteChannel,
+    renameChannel,
+  };
+};
+
+const actions = { ...slice.actions };
+export {
+  actions,
+  useChannelsActions,
+};
+export default slice.reducer;

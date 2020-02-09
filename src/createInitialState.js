@@ -11,7 +11,10 @@ const createInitialState = ({ channels: gonChannels, messages }) => {
       allIds: channelsAllIds,
       currentChannelId: 1,
     },
-    messages,
+    messages: {
+      messages,
+      sendMessageState: 'none',
+    },
     alert: { visible: false },
   };
 };

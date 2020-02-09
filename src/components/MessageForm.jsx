@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
-import { showAlert } from '../slices/alertSlice';
-import { sendMessage } from '../thunkActions';
+import { actions, asyncActions } from '../slices';
 import UserContext from '../user-context';
 
 const mapStateToProps = (state) => {
@@ -10,34 +9,34 @@ const mapStateToProps = (state) => {
   return { currentChannelId };
 };
 
-const actionCreators = {
-  sendMessage,
-  showAlert,
-};
-
 const MessageForm = (props) => {
-  const { sendMessage, showAlert, currentChannelId } = props;
+  const { showAlert, currentChannelId } = props;
+  const { useMessageActions } = asyncActions;
+  const { sendMessage } = useMessageActions();
   const textInput = React.createRef();
   const userName = useContext(UserContext);
+
+  const handleSubmit = async ({ text }, { setSubmitting, resetForm }) => {
+    const message = {
+      text,
+      from: userName,
+      time: Date.now(),
+    };
+    try {
+      await sendMessage(message, currentChannelId);
+    } catch (e) {
+      showAlert({ text: e.message });
+      throw e;
+    }
+    setSubmitting(false);
+    resetForm();
+    textInput.current.focus();
+  };
+
   return (
     <Formik
       initialValues={{ text: '' }}
-      onSubmit={async ({ text }, { setSubmitting, resetForm }) => {
-        const message = {
-          text,
-          from: userName,
-          time: Date.now(),
-        };
-        try {
-          await sendMessage(message, currentChannelId);
-        } catch (e) {
-          showAlert({ text: e.message });
-          throw e;
-        }
-        setSubmitting(false);
-        resetForm();
-        textInput.current.focus();
-      }}
+      onSubmit={handleSubmit}
     >
       {(formik) => (
         <Form
@@ -72,4 +71,4 @@ const MessageForm = (props) => {
     </Formik>
   );
 };
-export default connect(mapStateToProps, actionCreators)(MessageForm);
+export default connect(mapStateToProps, actions)(MessageForm);
