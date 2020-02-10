@@ -6,6 +6,7 @@ import channels, {
   useChannelsActions,
 } from './channels';
 import messages, { actions as messagesActions, useMessageActions } from './messages';
+import notifications, { actions as notificationsActions, useNotificationsActions } from './notifications';
 import modal, { actions as modalActions } from './modal';
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   channels,
   messages,
   modal,
+  notifications,
 });
 
 const actions = {
@@ -20,11 +22,13 @@ const actions = {
   ...channelActions,
   ...messagesActions,
   ...modalActions,
+  ...notificationsActions,
 };
 
 const asyncActions = {
   useChannelsActions,
   useMessageActions,
+  useNotificationsActions,
 };
 
 export {

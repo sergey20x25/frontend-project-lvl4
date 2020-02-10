@@ -12,10 +12,14 @@ const Alert = (props) => {
     return null;
   }
 
+  const handleClose = () => {
+    hideAlert();
+  };
+
   return (
     <div className={`alert alert-${alert.type || 'warning'} alert-dismissible`}>
       {alert.text}
-      <button onClick={hideAlert} type="button" className="close" aria-label="Close">
+      <button onClick={handleClose} type="button" className="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

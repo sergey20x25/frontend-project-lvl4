@@ -13,10 +13,10 @@ const DeleteChannelModal = ({
   byId,
   currentChannelId,
   hideModal,
-  showAlert,
 }) => {
-  const { useChannelsActions } = asyncActions;
+  const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { deleteChannel } = useChannelsActions();
+  const { showAutoHideNotification } = useNotificationsActions();
 
   const handleClose = () => {
     hideModal();
@@ -28,13 +28,10 @@ const DeleteChannelModal = ({
         await deleteChannel(id);
         hideModal();
       } catch (e) {
-        showAlert({ text: 'Some error' });
+        showAutoHideNotification({ text: 'An error occurred while deleting the channel' });
         hideModal();
         throw e;
       }
-    } else {
-      showAlert({ text: 'You can\'t delete this channel' });
-      hideModal();
     }
   };
 

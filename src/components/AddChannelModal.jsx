@@ -7,9 +7,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { actions, asyncActions } from '../slices';
 
-const AddChannelModal = ({ hideModal, showAlert }) => {
-  const { useChannelsActions } = asyncActions;
+const AddChannelModal = ({ hideModal }) => {
+  const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { createChannel } = useChannelsActions();
+  const { showAutoHideNotification } = useNotificationsActions();
 
   const handleClose = () => {
     hideModal();
@@ -20,7 +21,7 @@ const AddChannelModal = ({ hideModal, showAlert }) => {
       await createChannel(channelName);
       hideModal();
     } catch (e) {
-      showAlert({ text: 'Some error' });
+      showAutoHideNotification({ text: 'An error occurred while creating the channel' });
       hideModal();
     }
   };

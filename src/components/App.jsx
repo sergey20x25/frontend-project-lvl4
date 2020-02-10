@@ -4,8 +4,9 @@ import ChannelInfo from './ChannelInfo';
 import ChannelList from './ChannelList';
 import Dialog from './Dialog';
 import MessageForm from './MessageForm';
-import TopNav from './TopNav';
 import ModalRoot from './ModalRoot';
+import Notification from './Notification';
+import TopNav from './TopNav';
 
 const App = () => (
   <div className="container-fluid">
@@ -19,6 +20,7 @@ const App = () => (
         <Alert />
         <Dialog />
         <MessageForm />
+        <Notification />
       </div>
     </div>
     <ModalRoot />

@@ -40,9 +40,9 @@ const MessageForm = (props) => {
     >
       {(formik) => (
         <Form
-          className="form-inline pl-2 mt-auto d-flex"
+          className="form-inline pl-2 mt-auto mb-4 d-flex"
         >
-          <div className="input-group flex-fill py-3">
+          <div className="input-group flex-fill pt-3">
             <input
               {...formik.getFieldProps('text')}
               className="form-control"

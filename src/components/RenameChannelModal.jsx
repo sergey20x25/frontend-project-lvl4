@@ -16,10 +16,10 @@ const mapStateToProps = ({ channels }) => {
 const RenameChannelModal = ({
   currentChannel,
   hideModal,
-  showAlert,
 }) => {
-  const { useChannelsActions } = asyncActions;
+  const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { renameChannel } = useChannelsActions();
+  const { showAutoHideNotification } = useNotificationsActions();
 
   const handleClose = () => {
     hideModal();
@@ -30,7 +30,9 @@ const RenameChannelModal = ({
       await renameChannel(currentChannel.id, newChannelName);
       hideModal();
     } catch (e) {
-      showAlert({ text: 'Some error' });
+      showAutoHideNotification({
+        text: `An error occurred while renaming the channel #${currentChannel.name}`,
+      });
       hideModal();
       throw e;
     }

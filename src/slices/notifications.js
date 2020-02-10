@@ -2,36 +2,37 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 const slice = createSlice({
-  name: 'alert',
+  name: 'notifications',
   initialState: { visible: false },
   reducers: {
-    showAlert(state, { payload }) {
+    showNotification(state, { payload }) {
       return { ...payload, visible: true };
     },
-    hideAlert(state) {
+    hideNotification(state) {
       return { ...state, visible: false };
     },
   },
 });
-
 const {
-  showAlert,
-  hideAlert,
+  showNotification,
+  hideNotification,
 } = slice.actions;
 
 const useNotificationsActions = () => {
   const dispatch = useDispatch();
 
   const showAutoHideNotification = (payload) => {
-    dispatch(showAlert(payload));
+    const notificationShowTime = 7000;
+    dispatch(showNotification(payload));
     setTimeout(() => {
-      dispatch(hideAlert());
-    }, 15000);
+      dispatch(hideNotification());
+    }, notificationShowTime);
   };
   return { showAutoHideNotification };
 };
 
 const actions = { ...slice.actions };
+
 export {
   actions,
   useNotificationsActions,
