@@ -15,7 +15,6 @@ const createInitialState = ({ channels: gonChannels, messages }) => {
       messages,
       sendMessageState: 'none',
     },
-    alert: { visible: false },
     notifications: { visible: false },
   };
 };

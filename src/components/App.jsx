@@ -1,5 +1,4 @@
 import React from 'react';
-import Alert from './Alert';
 import ChannelInfo from './ChannelInfo';
 import ChannelList from './ChannelList';
 import Dialog from './Dialog';
@@ -17,7 +16,6 @@ const App = () => (
       </div>
       <div className="col d-flex flex-column">
         <ChannelInfo />
-        <Alert />
         <Dialog />
         <MessageForm />
         <Notification />
