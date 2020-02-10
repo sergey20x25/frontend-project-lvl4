@@ -19,14 +19,31 @@ const slice = createSlice({
       const { id } = payload;
       state.currentChannelId = id;
     },
-    createChannelRequest(state) {
-      state.createChannelState = 'requested';
-    },
-    createChannelSuccess(state, { payload }) {
+    addChannel(state, { payload }) {
       const { channel } = payload;
       const { id } = channel;
       state.byId[id] = channel;
       state.allIds.push(id);
+    },
+    removeChannel(state, { payload: { id: channelId } }) {
+      const newById = _.omit(state.byId, channelId);
+      const newAllIds = state.allIds.filter((id) => id !== channelId);
+      return {
+        ...state,
+        byId: newById,
+        allIds: newAllIds,
+        currentChannelId: 1,
+      };
+    },
+    changeChannelName(state, { payload }) {
+      const { channel } = payload;
+      state.byId[channel.id] = channel;
+    },
+
+    createChannelRequest(state) {
+      state.createChannelState = 'requested';
+    },
+    createChannelSuccess(state) {
       state.createChannelState = 'finished';
     },
     createChannelFailure(state) {
@@ -35,17 +52,8 @@ const slice = createSlice({
     deleteChannelRequest(state) {
       state.deleteChannelState = 'requested';
     },
-    deleteChannelSuccess(state, { payload: channelId }) {
-      const newById = _.omit(state.byId, channelId);
-      const newAllIds = state.allIds.filter((id) => id !== channelId);
-      const deleteChannelState = 'finished';
-      return {
-        ...state,
-        byId: newById,
-        allIds: newAllIds,
-        deleteChannelState,
-        currentChannelId: 1,
-      };
+    deleteChannelSuccess(state) {
+      state.deleteChannelState = 'finished';
     },
     deleteChannelFailure(state) {
       state.deleteChannelState = 'failed';
@@ -53,9 +61,7 @@ const slice = createSlice({
     renameChannelRequest(state) {
       state.renameChannelState = 'requested';
     },
-    renameChannelSuccess(state, { payload }) {
-      const { channel } = payload;
-      state.byId[channel.id] = channel;
+    renameChannelSuccess(state) {
       state.renameChannelState = 'finished';
     },
     renameChannelFailure(state) {
@@ -84,9 +90,8 @@ const useChannelsActions = () => {
     const url = routes.channelsPath();
     const data = { data: { attributes: name } };
     try {
-      const response = await axios.post(url, data);
-      const { data: { data: { attributes: channel } } } = response;
-      dispatch(createChannelSuccess({ channel }));
+      await axios.post(url, data);
+      dispatch(createChannelSuccess());
     } catch (e) {
       dispatch(createChannelFailure());
       throw e;
@@ -98,7 +103,7 @@ const useChannelsActions = () => {
     const url = routes.channelPath(channelId);
     try {
       await axios.delete(url);
-      dispatch(deleteChannelSuccess(channelId));
+      dispatch(deleteChannelSuccess());
     } catch (e) {
       dispatch(deleteChannelFailure());
       throw e;
@@ -110,9 +115,8 @@ const useChannelsActions = () => {
     const url = routes.channelPath(channelId);
     const data = { data: { attributes: { name: newChannelName } } };
     try {
-      const response = await axios.patch(url, data);
-      const { data: { data: { attributes: channel } } } = response;
-      dispatch(renameChannelSuccess({ channel }));
+      await axios.patch(url, data);
+      dispatch(renameChannelSuccess());
     } catch (e) {
       dispatch(renameChannelFailure());
       throw e;

@@ -26,7 +26,7 @@ const slice = createSlice({
     },
   },
   extraReducers: {
-    [channelsActions.deleteChannelSuccess]: (state, { payload: channelId }) => {
+    [channelsActions.removeChannel]: (state, { payload: { id: channelId } }) => {
       const newMessages = state.messages.filter((m) => m.channelId !== channelId);
       return {
         ...state,

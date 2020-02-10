@@ -28,6 +28,15 @@ export default () => {
   socket.on('newMessage', ({ data: { attributes: message } }) => {
     store.dispatch(actions.addMessage({ message }));
   });
+  socket.on('newChannel', ({ data: { attributes: channel } }) => {
+    store.dispatch(actions.addChannel({ channel }));
+  });
+  socket.on('removeChannel', ({ data: { id } }) => {
+    store.dispatch(actions.removeChannel({ id }));
+  });
+  socket.on('renameChannel', ({ data: { attributes: channel } }) => {
+    store.dispatch(actions.changeChannelName({ channel }));
+  });
 
   render(
     <Provider store={store}>
