@@ -21,7 +21,7 @@ const AddChannelModal = ({ hideModal }) => {
       await createChannel(channelName);
       hideModal();
     } catch (e) {
-      showAutoHideNotification({ text: 'An error occurred while creating the channel' });
+      showAutoHideNotification(e.message);
       hideModal();
     }
   };

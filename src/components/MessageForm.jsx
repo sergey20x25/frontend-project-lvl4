@@ -4,15 +4,15 @@ import { Formik, Form } from 'formik';
 import { actions, asyncActions } from '../slices';
 import UserContext from '../user-context';
 
-const mapStateToProps = (state) => {
-  const { channels: { currentChannelId } } = state;
-  return { currentChannelId };
-};
+const mapStateToProps = ({ currentChannelId }) => (
+  { currentChannelId }
+);
 
 const MessageForm = (props) => {
-  const { showAlert, currentChannelId } = props;
-  const { useMessageActions } = asyncActions;
+  const { currentChannelId } = props;
+  const { useMessageActions, useNotificationsActions } = asyncActions;
   const { sendMessage } = useMessageActions();
+  const { showAutoHideNotification } = useNotificationsActions();
   const textInput = React.createRef();
   const userName = useContext(UserContext);
 
@@ -25,7 +25,7 @@ const MessageForm = (props) => {
     try {
       await sendMessage(message, currentChannelId);
     } catch (e) {
-      showAlert({ text: e.message });
+      showAutoHideNotification(e.message);
       throw e;
     }
     setSubmitting(false);

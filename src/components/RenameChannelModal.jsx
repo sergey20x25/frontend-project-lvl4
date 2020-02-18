@@ -6,12 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { actions, asyncActions } from '../slices';
+import { currentChannelSelector } from '../selectors';
 
-const mapStateToProps = ({ channels }) => {
-  const { byId, currentChannelId } = channels;
-  const currentChannel = byId[currentChannelId];
-  return { currentChannel };
-};
+const mapStateToProps = (state) => (
+  {
+    currentChannel: currentChannelSelector(state),
+  }
+);
 
 const RenameChannelModal = ({
   currentChannel,
@@ -30,9 +31,7 @@ const RenameChannelModal = ({
       await renameChannel(currentChannel.id, newChannelName);
       hideModal();
     } catch (e) {
-      showAutoHideNotification({
-        text: `An error occurred while renaming the channel #${currentChannel.name}`,
-      });
+      showAutoHideNotification(e.message);
       hideModal();
       throw e;
     }

@@ -5,11 +5,12 @@ const slice = createSlice({
   name: 'notifications',
   initialState: { visible: false },
   reducers: {
-    showNotification(state, { payload }) {
-      return { ...payload, visible: true };
+    showNotification(state, { payload: text }) {
+      state.text = text;
+      state.visible = true;
     },
     hideNotification(state) {
-      return { ...state, visible: false };
+      state.visible = false;
     },
   },
 });

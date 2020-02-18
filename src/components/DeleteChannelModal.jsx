@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { actions, asyncActions } from '../slices';
+import { currentChannelSelector } from '../selectors';
 
-const mapStateToProps = ({ channels }) => {
-  const { byId, currentChannelId } = channels;
-  return { byId, currentChannelId };
-};
+const mapStateToProps = (state) => (
+  {
+    currentChannel: currentChannelSelector(state),
+  }
+);
 
 const DeleteChannelModal = ({
-  byId,
-  currentChannelId,
+  currentChannel,
   hideModal,
 }) => {
   const { useChannelsActions, useNotificationsActions } = asyncActions;
@@ -28,14 +29,12 @@ const DeleteChannelModal = ({
         await deleteChannel(id);
         hideModal();
       } catch (e) {
-        showAutoHideNotification({ text: 'An error occurred while deleting the channel' });
+        showAutoHideNotification(e.message);
         hideModal();
         throw e;
       }
     }
   };
-
-  const currentChannel = byId[currentChannelId];
 
   return (
     <Modal show onHide={hideModal}>

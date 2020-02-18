@@ -2,15 +2,13 @@ import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
 import { actions } from '../slices';
-import { channelsSelector, getCurrentChannelId } from '../selectors';
 
-const mapStateToProps = (state) => {
-  const props = {
-    channels: channelsSelector(state),
-    currentChannelId: getCurrentChannelId(state),
-  };
-  return props;
-};
+const mapStateToProps = ({ channels, currentChannelId }) => (
+  {
+    channels,
+    currentChannelId,
+  }
+);
 
 const ChannelList = (props) => {
   const {

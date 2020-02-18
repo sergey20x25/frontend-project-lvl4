@@ -9,11 +9,15 @@ import io from 'socket.io-client';
 import reducer, { actions } from './slices';
 import App from './components/App';
 import UserContext from './user-context';
-import createInitialState from './createInitialState';
 
 export default () => {
-  const preloadedState = createInitialState(gon);
-
+  const { channels, messages } = gon;
+  const preloadedState = {
+    channels,
+    currentChannelId: 1,
+    messages,
+    notifications: { visible: false },
+  };
   const store = configureStore({
     reducer,
     preloadedState,

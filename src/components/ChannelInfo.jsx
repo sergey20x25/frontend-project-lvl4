@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { actions } from '../slices';
-
+import { currentChannelSelector } from '../selectors';
 
 const mapStateToProps = (state) => {
-  const { channels: { byId, currentChannelId } } = state;
-  return { byId, currentChannelId };
+  const props = {
+    currentChannel: currentChannelSelector(state),
+  };
+  return props;
 };
 
-const ChannelInfo = ({ byId, currentChannelId, showModal }) => {
+const ChannelInfo = ({ currentChannel, showModal }) => {
   const handleDeleteChannel = () => {
     showModal({ modalType: 'DELETE_CHANNEL' });
   };
@@ -19,11 +21,9 @@ const ChannelInfo = ({ byId, currentChannelId, showModal }) => {
     showModal({ modalType: 'RENAME_CHANNEL' });
   };
 
-  const currentChannel = byId[currentChannelId];
-
   return (
     <div className="navbar navbar-expand-lg px-0 py-3 justify-content-between">
-      <h6>{`#${byId[currentChannelId].name}`}</h6>
+      <h6>{`#${currentChannel.name}`}</h6>
       <ButtonGroup aria-label="Channel buttons">
         <Button
           variant="light"
