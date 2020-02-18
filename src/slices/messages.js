@@ -13,9 +13,9 @@ const slice = createSlice({
     },
   },
   extraReducers: {
-    [channelsActions.removeChannel]: (state, { payload: { id: channelId } }) => {
-      return state.filter((m) => m.channelId !== channelId);
-    },
+    [channelsActions.removeChannel]: (state, { payload: { id: channelId } }) => (
+      state.filter((m) => m.channelId !== channelId)
+    ),
   },
 });
 
