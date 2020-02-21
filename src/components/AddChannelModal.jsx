@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -8,9 +8,13 @@ import Modal from 'react-bootstrap/Modal';
 import { actions, asyncActions } from '../slices';
 
 const AddChannelModal = ({ hideModal }) => {
+  const inputRef = useRef(null);
   const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { createChannel } = useChannelsActions();
   const { showAutoHideNotification } = useNotificationsActions();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [null]);
 
   const handleClose = () => {
     hideModal();
@@ -54,6 +58,7 @@ const AddChannelModal = ({ hideModal }) => {
                   placeholder="Channel name"
                   aria-label="Channel name"
                   aria-describedby="basic-addon2"
+                  ref={inputRef}
                 />
                 <InputGroup.Append>
                   <Button

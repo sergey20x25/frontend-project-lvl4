@@ -11,10 +11,7 @@ const mapStateToProps = (state) => (
   }
 );
 
-const DeleteChannelModal = ({
-  currentChannel,
-  hideModal,
-}) => {
+const DeleteChannelModal = ({ currentChannel, hideModal }) => {
   const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { deleteChannel } = useChannelsActions();
   const { showAutoHideNotification } = useNotificationsActions();

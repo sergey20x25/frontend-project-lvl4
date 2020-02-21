@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -14,13 +14,14 @@ const mapStateToProps = (state) => (
   }
 );
 
-const RenameChannelModal = ({
-  currentChannel,
-  hideModal,
-}) => {
+const RenameChannelModal = ({ currentChannel, hideModal }) => {
+  const inputRef = useRef(null);
   const { useChannelsActions, useNotificationsActions } = asyncActions;
   const { renameChannel } = useChannelsActions();
   const { showAutoHideNotification } = useNotificationsActions();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [null]);
 
   const handleClose = () => {
     hideModal();
@@ -65,6 +66,7 @@ const RenameChannelModal = ({
                   placeholder="New channel name"
                   aria-label="New channel name"
                   aria-describedby="basic-addon2"
+                  ref={inputRef}
                 />
                 <InputGroup.Append>
                   <Button
